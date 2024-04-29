@@ -19,8 +19,11 @@ func New(h string) (*Tasmota, error) {
 }
 
 type DataEnergy struct {
-	Voltage uint64
-	Power   float64
+	Voltage   uint64
+	Power     float64
+	Today     float64
+	Yesterday float64
+	Total     float64
 }
 
 func (t *Tasmota) GetEnergy() (ret DataEnergy, err error) {
@@ -30,6 +33,9 @@ func (t *Tasmota) GetEnergy() (ret DataEnergy, err error) {
 	}
 	ret.Voltage = s.Status.Energy.Voltage
 	ret.Power = float64(s.Status.Energy.Voltage) * s.Status.Energy.Current * s.Status.Energy.Factor
+	ret.Today = s.Status.Energy.Today
+	ret.Yesterday = s.Status.Energy.Yesterday
+	ret.Total = s.Status.Energy.Total
 	return
 }
 
